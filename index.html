@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            margin: 0;
+        }
+        .main {
+            background-color: white;
+            color: black;
+            margin-top: 200px;
+        }
+        
+        .image-container {
+            background-color: white;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 30px;
+            align-items: self-start;
+        }
+        .image-item {
+            overflow: hidden;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .image-item:hover .image-content {
+            background-color: skyblue;
+        }
+        .image-item img {
+            width: 100%;
+            height: 200px;
+            display: block;
+        }
+        .image-content {
+            padding: 10px;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+            box-sizing: border-box;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+        .image-item:hover .image-content {
+            opacity: 1;
+        }
+        .image-title {
+            font-family: "Poppins", sans-serif;
+            font-weight: 300;
+            font-size: 18px;
+            color: #666;
+            padding: 8px;
+            margin-left: 30px;
+            margin-top: -10px;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+        }
+        .image-description {
+            font-family: "Poppins", sans-serif;
+            font-weight: 300;
+            font-size: 16px;
+            color: #666;
+            padding: 8px;
+            margin-left: 48px;
+            margin-top: -20px;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+        }
+     
+        .box{
+            height: fit-content;
+            width: fit-content;
+            position: relative;
+            left: 660px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .box p{
+            margin-top: -30px;
+            color: rgba(12, 184, 127, 0.54);
+            font-weight: bolder;
+        }
+        .end{
+            height: 200px;
+            width: 100%;
+            background-color: black;
+            position: relative;
+            top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="main">
+        <div class="box">
+            <h1>Select Doctor</h1>
+            <p>____________</p>
+        </div>
+        <div class="image-container" id="imageContainer"></div>
+    </div>
+    <div class="end"></div>
+    <script>
+  
+        const imageData = [
+            {"image": "https://as2.ftcdn.net/v2/jpg/02/57/48/67/1000_F_257486764_GnnrHRNIBV93mAwR0aiNkS0x5UjDfIcl.jpg", "title": "Doctor Name 1", "description": "Speciality 1"},
+            {"image": "https://t4.ftcdn.net/jpg/03/20/74/45/240_F_320744517_TaGkT7aRlqqWdfGUuzRKDABtFEoN5CiO.jpg", "title": "Doctor Name 2", "description": "Speciality 2"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/11/08/00/1000_F_611080032_UC1uBNNwMNy8Yzl6rlwbRAZKHbdpZINr.jpg", "title": "Doctor Name 3", "description": "Speciality 3"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/03/00/22/02/1000_F_300220248_VKEd3QKx31kzqHcwZfnGmWKZLYTjf8R0.jpg", "title": "Doctor Name 4", "description": "Speciality 4"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/88/74/26/1000_F_688742669_nfDCUGeAmxTl4OqjU9LVZlKIj8QFIVEB.jpg", "title": "Doctor Name 5", "description": "Speciality 5"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/06/87/64/01/1000_F_687640182_4n7nK1sySp8fP17MfPSa2m2KPgcRIkoq.jpg", "title": "Doctor Name 6", "description": "Speciality 6"},
+            {"image": "https://media.istockphoto.com/id/1212177444/photo/happy-male-doctor-of-indian-ethnicity.jpg?s=2048x2048&w=is&k=20&c=qL2UqISbzwV-1rPUo0JYAdMoRFXYOllsjk7lyvzggLk=", "title": "Doctor Name 7", "description": "Speciality 7"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/98/05/62/1000_F_698056222_llz8ELIw40LcRm1RXPUsgsYbtUpwh8sx.jpg", "title": "Doctor Name 8", "description": "Speciality 8"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/98/05/62/1000_F_698056244_TBsodNoulhW6Gadc1nv014lY2CU4MHQl.jpg", "title": "Doctor Name 9", "description": "Speciality 9"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/88/74/58/1000_F_688745824_2gmDNldVQI3Osh8qoiWn9Sc8houLRFuW.jpg", "title": "Doctor Name 10", "description": "Speciality 10"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/88/74/58/1000_F_688745828_9U807N61wfwKH3fEnjmwJFLfbZrvEZ8k.jpg", "title": "Doctor Name 11", "description": "Speciality 11"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/39/30/30/1000_F_639303083_kYHZKPy6mlP4MweAHp4MeiDr3KDu8Jb9.jpg", "title": "Doctor Name 12", "description": "Speciality 12"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/02/60/04/09/1000_F_260040900_oO6YW1sHTnKxby4GcjCvtypUCWjnQRg5.jpg", "title": "Doctor Name 13", "description": "Speciality 13"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/39/28/96/1000_F_639289645_itpkDIXbxR4oVfcVxfiY4211OWdy0iYV.jpg", "title": "Doctor Name 14", "description": "Speciality 14"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/02/71/01/39/1000_F_271013934_XkEPjJhUESWRZj39c3Q4iKgYgeEbw30K.jpg", "title": "Doctor Name 15", "description": "Speciality 15"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/06/41/36/69/1000_F_641366958_I4Z1KqK1XHZq6S39pj1H3Oonl8nXsnqu.jpg", "title": "Doctor Name 16", "description": "Speciality 16"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/06/37/14/11/1000_F_637141153_ef6z20XhsITvhTXJPH6pFnX7HhoIwfRd.jpg", "title": "Doctor Name 17", "description": "Speciality 17"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/06/37/14/11/1000_F_637141175_FkWw6NZimKQf98M1Fla9HVxLA3WsdzzH.jpg", "title": "Doctor Name 18", "description": "Speciality 18"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/79/61/84/1000_F_679618431_C0oGg93cAt8ZgCFA8Bm9evcV86JoZWB9.jpg", "title": "Doctor Name 19", "description": "Speciality 19"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/01/36/18/77/1000_F_136187711_qeBMOwkPdTg1dCN8e5TR1AmduXDz60Xn.jpg", "title": "Doctor Name 20", "description": "Speciality 20"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/06/33/66/51/1000_F_633665160_XrnSV2qTc1Q2TudVeWUs01uQ4TKGOBZK.jpg", "title": "Doctor Name 21", "description": "Speciality 21"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/03/06/14/70/1000_F_306147002_BTnQn5XFQuPJ6O0ICstBnBg1DuyxDYKE.jpg", "title": "Doctor Name 22", "description": "Speciality 22"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/01/32/20/13/1000_F_132201347_PDpX5TqQoj1DGI9i9H6gXTLT63jngHEw.jpg", "title": "Doctor Name 23", "description": "Speciality 23"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/33/89/84/1000_F_633898494_I8qfWydc5HBjgkDnr6x1meKatTo0KUpx.jpg", "title": "Doctor Name 24", "description": "Speciality 24"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/36/49/72/1000_F_636497275_nSXprnUJNgZPfMnrmJrXqgauPfDlRYnA.jpg", "title": "Doctor Name 25", "description": "Speciality 25"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/06/31/17/73/1000_F_631177350_kP89KUokm0IOOujCLLOXUH16IrlWXGux.webp", "title": "Doctor Name 26", "description": "Speciality 26"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/06/44/06/65/1000_F_644066586_0RGNFyZBGEkuXhq8OCwSiKgkbJW9NTX4.jpg", "title": "Doctor Name 27", "description": "Speciality 27"},
+            {"image": "https://as2.ftcdn.net/v2/jpg/06/37/14/11/1000_F_637141153_ef6z20XhsITvhTXJPH6pFnX7HhoIwfRd.jpg", "title": "Doctor Name 28", "description": "Speciality 28"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/39/30/30/1000_F_639303083_kYHZKPy6mlP4MweAHp4MeiDr3KDu8Jb9.jpg", "title": "Doctor Name 29", "description": "Speciality 29"},
+            {"image": "https://as1.ftcdn.net/v2/jpg/06/98/05/62/1000_F_698056244_TBsodNoulhW6Gadc1nv014lY2CU4MHQl.jpg", "title": "Doctor Name 30", "description": "Speciality 30"},
+
+        ];
+
+        const imageContainer = document.getElementById('imageContainer');
+
+        // Function to load images and content from JSON data
+        function loadImages() {
+            imageData.forEach(item => {
+                const imageItem = document.createElement('div');
+                imageItem.classList.add('image-item');
+
+                const image = document.createElement('img');
+                image.src = item.image;
+
+                const imageContent = document.createElement('div');
+                imageContent.classList.add('image-content');
+
+                const title = document.createElement('div');
+                title.classList.add('image-title');
+                title.textContent = item.title;
+
+                const description = document.createElement('div');
+                description.classList.add('image-description');
+                description.textContent = item.description;
+
+                imageContent.appendChild(title);
+                imageContent.appendChild(description);
+
+                imageItem.appendChild(image);
+                imageItem.appendChild(imageContent);
+
+                imageContainer.appendChild(imageItem);
+            });
+        }
+
+        // To Load images and content when the page is fully loaded
+        window.onload = loadImages;
+    </script>
+</body>
+</html>
